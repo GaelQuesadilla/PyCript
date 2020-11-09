@@ -11,7 +11,7 @@ letters =[" ",
         ",", ";", ".", ":",
         "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q",
         "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
-        "\n", "_"]
+        "_"]
 
 
 def delete_screen():
@@ -70,7 +70,7 @@ print(Fore.YELLOW + "\n-- Establezca una contraseña")
 password = input("")
 password_p = []
 
-for le in password:
+for le in password: #Convert letters into numbers
      p = letters.index(le)
      password_p.append(p + 2)
 print(password_p)
@@ -82,37 +82,51 @@ new_archive.write("")
 archive = open(archive_directory, "r")
 
 secure_password = []
-for num in range(0, len(password_p)):
+for num in range(0, len(password_p)): #Create a secure password from original password
     for gen in range(num, len(password_p)):
         secure_password.append(password_p[num] * password_p[gen])
         
 print("-----------")
 print(secure_password)
 
-for li in range(0, len(archive.readlines())):
+for li in range(0, len(archive.readlines())): #Start to encript the file
 
     archive = open(archive_directory, "r")
-    print(archive.readlines()[li])
+    print(Fore.MAGENTA + "> " + archive.readlines()[li])
     archive = open(archive_directory, "r")
+    visualization = []
 
     for le in range(0, len(archive.readlines()[li])):
         try:
             archive = open(archive_directory, "r")
             line = archive.readlines()[li]
 
-            letter_li = letters.index((line[le % len(letters)]))
-            pass_index = letter_li + secure_password[password_counter % len(secure_password)]
-            letter_pos = letters[pass_index % len(letters)]
+            if line[le] == "\n":
+                letter_pos = "\n"
+            
+            else:
+                letter_li = letters.index(line[le])
+                pass_index = letter_li + secure_password[password_counter % len(secure_password)]
+                letter_pos = letters[pass_index % len(letters)]
         
         except Exception as e:
             print(f"{li}, {le}///  {e}")
             archive = open(archive_directory, "r")
-            letter_ar = (archive.readlines()[li][le])
-            letter_pos = letter_ar
+            letter_pos = (archive.readlines()[li][le])
 
-        password_counter += 1
+
         new_archive = open("encriptado.txt", "a")
         new_archive.write(letter_pos)
+        visualization.append(letter_pos)
+
+        password_counter += 1
+
+    
+    print(Style.BRIGHT + ">>>", end="")
+    for letter in visualization:
+        print(Fore.MAGENTA + letter, end="")
+    print("\n")
+#End of encryptation    
 
 
 print(Fore.BLUE + "\n Encriptado con exito")
