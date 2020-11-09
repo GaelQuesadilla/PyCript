@@ -115,5 +115,5 @@ for li in range(0, len(archive.readlines())):
         new_archive.write(letter_pos)
 
 
-print(Fore.BLUE + "\n Desncriptado con exito")
+print(Fore.BLUE + "\n Desencriptado con exito")
 w = input(Fore.BLUE + "===============================================")
